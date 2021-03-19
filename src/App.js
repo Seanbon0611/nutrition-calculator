@@ -1,9 +1,10 @@
-import "./App.css";
+import React, { useState } from "react";
+import LandingPage from "./LandingPage";
 
 function App() {
   return (
     <div>
-      <p className="text-xl">Test</p>
+      <LandingPage />
     </div>
   );
 }
