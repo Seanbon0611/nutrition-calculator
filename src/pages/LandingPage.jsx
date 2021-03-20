@@ -6,6 +6,7 @@ import ErrorPage from "./ErrorPage";
 
 const LandingPage = () => {
   const [step, setStep] = useState(1);
+  const [sex, setSex] = useState(null);
   const [height, setHeight] = useState(null);
   const [heightUnit, setHeightUnit] = useState(null);
   const [age, setAge] = useState(null);
@@ -15,17 +16,39 @@ const LandingPage = () => {
   const [daysActive, setDaysActive] = useState(null);
   const [activityLevel, setActivityLevel] = useState(null);
 
+  const next = () => {
+    setStep((s) => s + 1);
+  };
+
+  const prev = () => {
+    setStep((s) => s - 1);
+  };
+
   switch (step) {
     case 1:
       return (
         <div>
-          <UserMeasurementForm />
+          <UserMeasurementForm
+            next={next}
+            setSex={setSex}
+            setHeight={setHeight}
+            setHeightUnit={setHeightUnit}
+            setAge={setAge}
+            setWeight={setWeight}
+            setWeightUnit={setWeightUnit}
+          />
         </div>
       );
     case 2:
       return (
         <div>
-          <UserGoalsForm />
+          <UserGoalsForm
+            next={next}
+            prev={prev}
+            setGoal={setGoal}
+            setDaysActive={setDaysActive}
+            setActivityLevel={setActivityLevel}
+          />
         </div>
       );
     case 3:
