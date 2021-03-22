@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ActivityForm from "../components/ActivityForm";
 import UserGoalsForm from "../components/UserGoalsForm";
 import UserMeasurementForm from "../components/UserMeasurementForm";
 import UserResults from "../components/UserResults";
@@ -52,6 +53,15 @@ const LandingPage = () => {
         </div>
       );
     case 3:
+      return (
+        <div>
+          <ActivityForm
+            setDaysActive={setDaysActive}
+            setActivityLevel={setActivityLevel}
+          />
+        </div>
+      );
+    case 4:
       return (
         <div>
           <UserResults />
