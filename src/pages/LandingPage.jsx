@@ -9,13 +9,15 @@ const LandingPage = () => {
   const [step, setStep] = useState(1);
   const [sex, setSex] = useState(null);
   const [height, setHeight] = useState(null);
-  const [heightUnit, setHeightUnit] = useState(null);
   const [age, setAge] = useState(null);
   const [weight, setWeight] = useState(null);
   const [weightUnit, setWeightUnit] = useState(null);
   const [goal, setGoal] = useState(null);
   const [daysActive, setDaysActive] = useState(null);
   const [activityLevel, setActivityLevel] = useState(null);
+  const [bmr, setBmr] = useState(null);
+  const [caloricIntake, setCaloricIntake] = useState(null);
+  const [error, setError] = useState([]);
 
   const next = () => {
     setStep((s) => s + 1);
@@ -25,6 +27,36 @@ const LandingPage = () => {
     setStep((s) => s - 1);
   };
 
+  const calculateBmr = (w, wu, h, a, s) => {
+    const base = 10 * w + 6.25 * h - 5 * a;
+    if (wu === "lb") {
+      setWeight(w * 0.45359237);
+    }
+    if (s === "m") {
+      return setBmr(base + 5);
+    } else if (s === "f") {
+      return setBmr(base - 161);
+    } else {
+      return setError([...error, "Error calculating"]);
+    }
+  };
+  const calculateCaloricIntake = (da, b) => {
+    if (da === 5) {
+      setCaloricIntake(b * 1.6);
+    } else if (da > 0 && da < 4) {
+      setCaloricIntake(b * 1.3);
+    } else if (da < 7 && da > 5) {
+      setCaloricIntake(b * 1.8);
+    } else {
+      setError([...error, "Error Calculating Calories"]);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    calculateBmr(weight, weightUnit, height, age, sex);
+    next();
+  };
   switch (step) {
     case 1:
       return (
@@ -33,7 +65,6 @@ const LandingPage = () => {
             next={next}
             setSex={setSex}
             setHeight={setHeight}
-            setHeightUnit={setHeightUnit}
             setAge={setAge}
             setWeight={setWeight}
             setWeightUnit={setWeightUnit}
@@ -56,15 +87,24 @@ const LandingPage = () => {
       return (
         <div>
           <ActivityForm
+            next={next}
+            prev={prev}
             setDaysActive={setDaysActive}
             setActivityLevel={setActivityLevel}
+            handleSubmit={handleSubmit}
           />
         </div>
       );
     case 4:
       return (
         <div>
-          <UserResults />
+          <UserResults
+            prev={prev}
+            calculateCaloricIntake={calculateCaloricIntake}
+            bmr={bmr}
+            daysActive={daysActive}
+            caloricIntake={caloricIntake}
+          />
         </div>
       );
     default:
