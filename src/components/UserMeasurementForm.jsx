@@ -6,13 +6,19 @@ const UserMeasurementForm = ({
   setWeight,
   setWeightUnit,
   setSex,
+  setAge,
 }) => {
   return (
     <div>
-      <form className="flex flex-col">
+      <div className="flex flex-col">
+        <label>
+          Age:
+          <input type="number" onChange={(e) => setAge(e.target.value)} />
+        </label>
         <label>
           Sex:
           <select onChange={(e) => setSex(e.target.value)}>
+            <option></option>
             <option value="m">M</option>
             <option value="f">F</option>
           </select>
@@ -35,11 +41,12 @@ const UserMeasurementForm = ({
             required
           />
           <select onChange={(e) => setWeightUnit(e.target.value)}>
+            <option></option>
             <option value="kg">KG</option>
             <option value="lb">LB</option>
           </select>
         </label>
-      </form>
+      </div>
       <button onClick={next}>Continue</button>
     </div>
   );
