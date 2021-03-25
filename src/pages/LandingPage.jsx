@@ -41,14 +41,22 @@ const LandingPage = () => {
     }
   };
   const calculateCaloricIntake = (da, b) => {
+    let maintainanceCalories;
     if (da === 5) {
-      setCaloricIntake(b * 1.6);
+      maintainanceCalories = b * 1.6;
     } else if (da > 0 && da < 4) {
-      setCaloricIntake(b * 1.3);
+      maintainanceCalories = b * 1.3;
     } else if (da < 7 && da > 5) {
-      setCaloricIntake(b * 1.8);
+      maintainanceCalories = b * 1.8;
     } else {
       setError([...error, "Error Calculating Calories"]);
+    }
+    if (goal === "lose") {
+      setCaloricIntake(maintainanceCalories - 350);
+    } else if (goal === "gain") {
+      setCaloricIntake(maintainanceCalories + 250);
+    } else {
+      setCaloricIntake(maintainanceCalories);
     }
   };
 
